@@ -16,7 +16,11 @@ def hash_inicial(nome, tamanho_tabela=26):
     return (codigo_ascii+13)%tamanho_tabela
 
 def hash_completa(nome, tamanho_tabela=26):
-    pass
+    soma = 0
+    for letra in nome.upper():
+        if letra != ' ': # ignorar espacos
+            soma += ord(letra)
+    return soma%tamanho_tabela
 
 def le_arquivo():
     with open("nomes.txt", "r", encoding="utf-8") as arquivo:
@@ -29,14 +33,16 @@ def le_arquivo():
 if __name__ == "__main__":
     # salva_arquivo(20000)
     lista_nomes = le_arquivo()
+    tamanho_M = 20
     tabela = {}
     # inicializando a tabela
-    for i in range(26):
+    for i in range(tamanho_M):
         tabela[i] = []
 
     # percorrer os nomes da lista e armazenar na categoria correta
     for nome in lista_nomes:
-        categoria = hash_inicial(nome)
+        # categoria = hash_inicial(nome, tamanho_M)
+        categoria = hash_completa(nome, tamanho_M)
         # print(f"{nome} - {categoria}")
         tabela[categoria].append(nome)
 
