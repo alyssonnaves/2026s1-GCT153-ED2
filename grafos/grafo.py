@@ -1,8 +1,8 @@
 class Grafo:
-
     def __init__(self, num_vertices: int):
         self.num_vertices = num_vertices
         self.adj = []
+
         for _ in range(self.num_vertices):
             self.adj.append([])
         
@@ -24,6 +24,18 @@ class Grafo:
                 return True
         return False
         
+    def dfs(self, origem):
+        visitado = [False] * self.num_vertices
+        ordem = []
+        def _dfs(vertice):
+            visitado[vertice] = True
+            ordem.append(vertice)
+            for w in self.adj[vertice]:
+                if not visitado[w]:
+                    _dfs(w)
+        _dfs(origem)
+        return ordem
+    
 if __name__ == "__main__":
     g = Grafo(10)
     print(g.adj)
@@ -40,3 +52,4 @@ if __name__ == "__main__":
     print(f"Grau: {g.grau(2)}")
     print("vizinhos")
     print(g.eh_vizinho(1,9))
+    print(g.dfs(3))
